@@ -1,0 +1,34 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg">
+
+    <div class="container-fluid d-flex justify-content-between">
+      <a class="navbar-brand fw-bold" id="navbar" href="{% static 'index.html' %}">Navbar</a>
+
+      <form action="{% static 'filter.html' %}" method="get">
+        <div class="search">
+          <span class="search-icon material-symbols-outlined">search</span>
+          <input class="search-input" type="search" placeholder="Search">
+        </div>
+      </form>
+
+      <div class="d-flex">
+        <a id="favorites" href="favorites.html">
+          <i class="fa-solid fa-heart"></i>
+        </a>
+        <div class="dropdown ms-2">
+          <a class="dropdown-toggle" href="#" id="profiletext" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-circle" id="profileicon"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profiletext">
+            <li><a class="dropdown-item" href="{% static 'login.html' %}" >Iniciar Sesion</a></li>
+            <li><a class="dropdown-item" href="{% static 'register.html' %}">Registrarse</a></li>
+          </ul>
+        </div>
+        <a id="cart" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+        
+      </div>
+    </div>
+  </nav>
