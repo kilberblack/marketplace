@@ -20,8 +20,8 @@
             <i class="fas fa-user-circle" id="profileicon"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profiletext">
-            <li><a class="dropdown-item" href="login.html" >Iniciar Sesion</a></li>
-            <li><a class="dropdown-item" href="register.html">Registrarse</a></li>
+            <li><a class="dropdown-item" href="{% url 'inisesion' %}" >Iniciar Sesion</a></li>
+            <li><a class="dropdown-item" href="{% url 'registro' %}">Registrarse</a></li>
           </ul>
         </div>
         <a id="cart" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 def index(request):
     return render(request, 'index.html')
@@ -12,3 +11,12 @@ def product(request):
 
 def filter(request):
     return render(request, 'filter.html')
+
+def cart(request):
+    return render(request, 'cart.html')
+
+def inisesion(request):
+    return render(request, 'login.html')
+
+def registrarse(request):
+    return render(request, 'register.html')

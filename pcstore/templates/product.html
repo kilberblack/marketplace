@@ -7,7 +7,7 @@
         <div class="row">
 
           <div class="col-8 flex-grow-1 bg-gray p-3 d-flex">
-            <img id="displayProduct" src="fotos/procesador.png" alt="...">
+            <img id="displayProduct" src="{% static 'fotos/procesador.png' %}" alt="...">
             <div class="product-text">
               <h1>AMD® CPU AMD sAM4</h1>
               <h2>CPU Ryzen 7 5700G (AM4)</h2>
@@ -32,25 +32,25 @@
           <div class="col-4">
             <div class="row">
               <div class="col-12">  
-                <a href="cart.html" class="no-style">
+                <a href="{% url 'cart' %}" class="no-style">
                   <div class="box d-flex box1">  
                     <div class="col-6 boxes box-price">$240.000</div>  
                     <div class="col-6 boxes box-text">Con todo medio de pago</div>
                   </div>
                 </a>
-                <a href="cart.html" class="no-style">
+                <a href="{% url 'cart' %}" class="no-style">
                   <div class="box d-flex box2">
                     <div class="col-6 boxes box-price">$190.990</div>  
                     <div class="col-6 boxes box-text">Con todo medio de pago</div>
                   </div>
                 </a>
-                <a href="cart.html" class="no-style">
+                <a href="{% url 'cart' %}" class="no-style">
                   <div class="box d-flex box3">
                     <div class="col-6 boxes box-price">$195.800</div>  
                     <div class="col-6 boxes box-text">Con todo medio de pago</div>
                   </div>
                 </a>
-                <a href="cart.html" class="no-style">
+                <a href="{% url 'cart' %}" class="no-style">
                   <div class="box d-flex box4">
                     <div class="col-6 boxes box-price">$250.990</div> 
                     <div class="col-6 boxes box-text">Con todo medio de pago</div> 

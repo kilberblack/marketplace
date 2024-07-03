@@ -1,0 +1,109 @@
+{% extends "main.html" %}
+{% load static %}
+{% block content %}
+
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <div class="prod-box rounded-5">
+              <div class="prod-pic "> 
+                <img src="{% static 'fotos/procesador.png' %}" alt="...">
+              </div>
+              <div class="prod-text">
+                <h5>Procesador CPU AMD Ryzen 7 7800X</h5>
+                <h3>$ 254.990</h3>
+                <p>Precio Efectivo</p>
+                <h4><span class="material-symbols-outlined">
+                  remove
+                  </span>
+                  </span> 1 <span class="material-symbols-outlined">
+                    add </span></h4> 
+              </div>
+            </div>
+            <div class="prod-box rounded-5">
+              <div class="prod-pic "> 
+                <img src="{% static 'fotos/procesador.png' %}" alt="...">
+              </div>
+              <div class="prod-text">
+                <h5>Procesador CPU AMD Ryzen 7 7800X</h5>
+                <h3>$ 254.990</h3>
+                <p>Precio Efectivo</p>
+                <h4><span class="material-symbols-outlined">
+                  remove
+                  </span>
+                  </span> 1 <span class="material-symbols-outlined">
+                    add </span></h4> 
+              </div>
+            </div>
+            <div class="prod-box rounded-5">
+              <div class="prod-pic "> 
+                <img src="{% static 'fotos/procesador.png' %}" alt="...">
+              </div>
+              <div class="prod-text">
+                <h5>Procesador CPU AMD Ryzen 7 7800X</h5>
+                <h3>$ 254.990</h3>
+                <p>Precio Efectivo</p>
+                <h4><span class="material-symbols-outlined">
+                  remove
+                  </span>
+                  </span> 1 <span class="material-symbols-outlined">
+                    add </span></h4> 
+              </div>
+            </div>
+          </div>
+          <div class="col-6 info-pago">
+            <div class="cart-info">
+              <h1>Total del carrito</h1>
+
+              <div class="form-group">
+                <label for="firstName">Nombre:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Ingrese su nombre">
+              </div>
+              <div class="form-group">
+                <label for="lastName">Apellido:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Ingrese su apellido">
+              </div>
+
+              <div class="dropdown ml-2">
+                <button class="btn dropdown-toggle" type="button" id="deliveryMethod" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Tipo de Envio <span class="material-symbols-outlined"> local_shipping</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="deliveryMethod">
+                  <a class="dropdown-item" href="#">Delivery</a>
+                    <a class="dropdown-item" href="#">Retiro en tienda</a>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="address">Direccion:</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="Ingrese su direccion">
+              </div>
+
+              <div class="dropdown ml-2">
+                <button class="btn dropdown-toggle" type="button" id=metodoPago" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Metodo de pago <span class="material-symbols-outlined"> payments</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="metodoPago">
+                  <a class="dropdown-item" href="#">Credito</a>
+                  <a class="dropdown-item" href="#">Debito</a>
+                  <a class="dropdown-item" href="#">Transferencia</a>
+                </div>
+              </div>
+
+              <div class="final-price">
+                <h3>$254.990</h3>
+                <h3>$265.190</h3>
+                <h3>+ $100.990</h3>
+                <h3>Total: $621.170</h3>
+              </div>
+
+              <div class="pago">
+                <button type="button" class="btn btn-primary">Comprar</button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+{% endblock content %}

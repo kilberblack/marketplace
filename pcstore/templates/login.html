@@ -1,0 +1,27 @@
+{% extends "main.html" %}
+{% load static %}
+{% block content %}
+
+    <div class="container">
+        <form id="form" action="/">
+            <div class="h1-container">  <h1>Iniciar Sesion</h1>
+                <a href="{% url 'index' %}" class="close-btn">X</a> </div>
+            <div class="input-control">
+            <div class="input-control">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="text">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="password">Contraseña</label>
+                <input id="password"name="password" type="password">
+                <div class="error"></div>
+            </div>
+            <button type="submit">Log in</button>
+            <div class="container signin">
+                <p>¿No tienes una cuenta? <a href="{% url 'registro' %}">Registrate</a>.</p>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
