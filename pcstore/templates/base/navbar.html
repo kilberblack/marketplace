@@ -1,11 +1,10 @@
 {% load static %}
-
 <nav class="navbar navbar-expand-lg">
 
     <div class="container-fluid d-flex justify-content-between">
-      <a class="navbar-brand fw-bold" id="navbar" href="">Navbar</a>
+      <a class="navbar-brand fw-bold" id="navbar" href="{% url 'index'%}">Navbar</a>
 
-      <form action="filter.html" method="get">
+      <form action="{% url 'filter' %}" method="get">
         <div class="search">
           <span class="search-icon material-symbols-outlined">search</span>
           <input class="search-input" type="search" placeholder="Search">
@@ -13,7 +12,7 @@
       </form>
 
       <div class="d-flex">
-        <a id="favorites" href="favorites.html">
+        <a id="favorites" href="{% url 'favorites' %}">
           <i class="fa-solid fa-heart"></i>
         </a>
         <div class="dropdown ms-2">
