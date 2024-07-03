@@ -1,0 +1,65 @@
+{% extends "main.html" %}
+{% load static %}
+{% block content %}
+
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col-8 flex-grow-1 bg-gray p-3 d-flex">
+            <img id="displayProduct" src="fotos/procesador.png" alt="...">
+            <div class="product-text">
+              <h1>AMD® CPU AMD sAM4</h1>
+              <h2>CPU Ryzen 7 5700G (AM4)</h2>
+              <h3 id="p-efectivo">$ 254.990</h3>
+              <h2>Precio Efectivo</h2>
+              <h3>$ 262.890</h3>
+              <h2>Precio Normal</h2>
+              <h4><span class="material-symbols-outlined">
+                remove
+                </span>
+                </span> 1 <span class="material-symbols-outlined">
+                  add </span></h4> 
+              <h5> Agregar al Carrito <span class="material-symbols-outlined">
+                add_shopping_cart
+                </span></h5>
+              <p><span class="material-symbols-outlined" id="truck">local_shipping</span>Despacho a Domicilio <span id="avalible">Disponible</span></p>
+              <p><span class="material-symbols-outlined" id="storefront">store</span>Retiro en tienda <span id="avalible2">Disponible</span></p>
+            </div>
+          
+          </div>
+
+          <div class="col-4">
+            <div class="row">
+              <div class="col-12">  
+                <a href="cart.html" class="no-style">
+                  <div class="box d-flex box1">  
+                    <div class="col-6 boxes box-price">$240.000</div>  
+                    <div class="col-6 boxes box-text">Con todo medio de pago</div>
+                  </div>
+                </a>
+                <a href="cart.html" class="no-style">
+                  <div class="box d-flex box2">
+                    <div class="col-6 boxes box-price">$190.990</div>  
+                    <div class="col-6 boxes box-text">Con todo medio de pago</div>
+                  </div>
+                </a>
+                <a href="cart.html" class="no-style">
+                  <div class="box d-flex box3">
+                    <div class="col-6 boxes box-price">$195.800</div>  
+                    <div class="col-6 boxes box-text">Con todo medio de pago</div>
+                  </div>
+                </a>
+                <a href="cart.html" class="no-style">
+                  <div class="box d-flex box4">
+                    <div class="col-6 boxes box-price">$250.990</div> 
+                    <div class="col-6 boxes box-text">Con todo medio de pago</div> 
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock content %}
