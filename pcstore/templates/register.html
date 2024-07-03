@@ -4,8 +4,8 @@
 
     <div class="container">
         <form id="form" action="/">
-            <div class="h1-container">  <h1>Registro</h1>
-                <a href="index.html" class="close-btn">X</a> </div>
+            <div class="h1-container">  
+                <h1>Registro</h1>
             <div class="input-control">
                 <label for="username">Usuario</label>
                 <input id="username" name="username" type="text">
@@ -26,7 +26,7 @@
                 <input id="password2"name="password2" type="password">
                 <div class="error"></div>
             </div>
-            <button type="submit">Registro</button>
+            <button type="submit" class="btn btn-primary w-100">Registro</button>
             <div class="container signin">
                 <p>¿Ya tienes una cuenta? <a href="{% url 'inisesion' %}">Iniciar Sesion</a>.</p>
             </div>
@@ -34,3 +34,11 @@
     </div>
 
 {% endblock content %}
+
+{% block scriptload %}
+      <script src="{% static 'js/register.js' %}"></script>
+{% endblock scriptload %}
+
+{% block footer %}
+
+{% endblock footer %}
