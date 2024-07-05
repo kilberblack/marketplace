@@ -2,35 +2,22 @@
 {% load static %}
 {% block content %}
 
-    <div class="container">
-        <form id="form" action="/">
-            <div class="h1-container">  
-                <h1>Registro</h1>
-            <div class="input-control">
-                <label for="username">Usuario</label>
-                <input id="username" name="username" type="text">
-                <div class="error"></div>
-            </div>
-            <div class="input-control">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="text">
-                <div class="error"></div>
-            </div>
-            <div class="input-control">
-                <label for="password">Contraseña</label>
-                <input id="password"name="password" type="password">
-                <div class="error"></div>
-            </div>
-            <div class="input-control">
-                <label for="password2">Confirmar Contraseña</label>
-                <input id="password2"name="password2" type="password">
-                <div class="error"></div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Registro</button>
-            <div class="container signin">
-                <p>¿Ya tienes una cuenta? <a href="{% url 'inisesion' %}">Iniciar Sesion</a>.</p>
-            </div>
-        </form>  
+    <div class="container" style="color: white;">
+        <form method="POST" action="">
+            {% csrf_token %}
+                <h1 style="text-align: center;">Iniciar Sesion</h1>
+                {% if mensaje %}
+                    <div class='{{design}}'>
+                        {{mensaje}}
+                    </div>
+                {% endif%}
+                
+                {{form.as_p}}
+                <button type="submit" class="btn btn-primary w-100">Registro</button>
+        </form>
+        <div style="text-align: center; margin-top: 10px;">
+            <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Iniciar Sesion</a>.</p>
+        </div>
     </div>
 
 {% endblock content %}

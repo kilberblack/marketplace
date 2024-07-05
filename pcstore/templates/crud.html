@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+{% load static %}
+{% block content %}
+
+<div style="text-align: center; margin-top: 5vh;">
+    <a class="btn btn-primary" href="{% url 'viewproducts' %}">Ver Productos</a>
+    <a class="btn btn-primary" href="{% url 'seeusers'%}">Ver Usuarios</a>
+</div>
+
+
+{% endblock content%}
+{% block footer %}
+
+{% endblock footer%}

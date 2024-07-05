@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/createform.css' %}">
+{% endblock css%}
+{% block content %}
+
+<div class="form-container">
+    <form method="POST" action="" class="form-form">
+        <h2>Modificar Producto</h2>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary w-100">Modificar</button>
+        <button class="btn btn-danger mt-2 w-100" type="button" onclick="window.location.href='{% url 'viewproducts' %}'" >Volver</button>
+    </form>
+</div>
+
+{% endblock content%}
+{% block footer %}
+
+{% endblock footer%}

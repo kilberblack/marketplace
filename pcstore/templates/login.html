@@ -3,25 +3,27 @@
 {% block content %}
 
     <div class="container">
-        <form id="form" action="/">
-            <div class="h1-container">  
-                <h1>Iniciar Sesion</h1>
-            </div>
-            <div class="input-control">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="text">
-                <div class="error"></div>
-            </div>
-            <div class="input-control">
-                <label for="password">Contraseña</label>
-                <input id="password"name="password" type="password">
-                <div class="error"></div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Log in</button>
-            <div class="container signin">
-                <p>¿No tienes una cuenta? <a href="{% url 'registro' %}">Registrate</a>.</p>
-            </div>
+        <form method="POST" action="">
+            {% csrf_token %}
+                <h1 style="color: white; text-align: center;">Iniciar Sesion</h1>
+
+                {% if mensaje %}
+                    <div class='{{design}}'>
+                        {{mensaje}}
+                    </div>
+                {% endif%}
+                
+                <label>Usuario</label>
+                <input class="rounded-3" type="text" name="username" placeholder="Ingrese Usuario" />
+
+                <label>Contraseña</label>
+                <input class="rounded-3" type="password" name="password" placeholder="Ingrese Contraseña" />
+
+                <input class="btn btn-primary w-100" type="submit" value="Login">
         </form>
+        <div style="text-align: center; margin-top: 10px;">
+            <p>¿No tienes una cuenta? <a href="{% url 'registro' %}">Iniciar Sesion</a>.</p>
+        </div>
     </div>
 
 {% endblock content %}
@@ -32,4 +34,4 @@
 
 {% block scriptload %}
      <script src="{% static 'js/login.js' %}"></script>
-{% endblock scriptload %}
+{% endblock scriptload %} 

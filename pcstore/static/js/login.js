@@ -1,5 +1,5 @@
 const form = document.getElementById('form');
-const email = document.getElementById('email');
+const email = document.getElementById('username');
 const password = document.getElementById('password');
 
 form.addEventListener('submit', e => {

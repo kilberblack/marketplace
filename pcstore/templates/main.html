@@ -13,15 +13,27 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'register.css' %}">
+    {% block css %}
+    {% endblock css%}
   </head>
   <body>
     <header>
       {% include "base/navbar.html" %}
+
+      
     </header>
 
     {% include "base/cartpopup.html" %}
 
     <main>
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+            <li></li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      
       {% block content %}
       {% endblock content %}
     </main>

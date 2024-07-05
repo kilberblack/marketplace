@@ -20,8 +20,16 @@
             <i class="fas fa-user-circle" id="profileicon"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profiletext">
-            <li><a class="dropdown-item" href="{% url 'inisesion' %}" >Iniciar Sesion</a></li>
-            <li><a class="dropdown-item" href="{% url 'registro' %}">Registrarse</a></li>
+            {% if request.user.is_authenticated %}
+              <li class="dropdown-item">{{request.user.username}}</li>
+              {% if request.user.is_superuser %}
+                <li><a class="dropdown-item" href="{% url 'crud' %}">Admin Panel</a></li>
+              {% endif %}
+              <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
+            {% else %}
+              <li><a class="dropdown-item" href="{% url 'login' %}" >Iniciar Sesion</a></li>
+              <li><a class="dropdown-item" href="{% url 'registro' %}">Registrarse</a></li>
+            {% endif%}
           </ul>
         </div>
         <a id="cart" href="#" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
