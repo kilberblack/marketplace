@@ -16,6 +16,7 @@
                         <th>Precio</th>
                         <th>Stock</th>
                         <th>Fabricante</th>
+                        <th>Imagen</th>
                         <th>Fecha Creacion</th>
                         <th>Ultima Modificacion</th>
                         <th>Modificar</th>
@@ -31,6 +32,7 @@
                         <td>{{ tmp.precio }}</td>
                         <td>{{ tmp.stock }}</td>
                         <td>{{ tmp.fabricante }}</td>
+                        <td>{{ tmp.image }}</td>
                         <td>{{ tmp.created }}</td>
                         <td>{{ tmp.updated }}</td>
                         <td><a href="{% url 'updateproduct' tmp.id %}"><button class="btn btn-primary">Modificar</button></a></td>

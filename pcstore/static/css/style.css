@@ -90,6 +90,7 @@ footer {
     background-color: var(--primary);
     color: var(--text-900);
     opacity: 60%;
+    margin-top: 3vh;
     margin-left: 16vw;
     margin-bottom: 5vh;
 }
@@ -546,6 +547,32 @@ footer {
 
 .info-pago .material-symbols-outlined {
     margin-left: 5px;
+}
+
+.quantity{
+	display: inline-block;
+	font-weight: 700;
+	padding-right:10px;
+}
+
+.quantitys {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chg-quantity{
+	width: 12px;
+	cursor: pointer;
+	display: block;
+	margin-top: 5px;
+	transition:.1s;
+}
+
+.image-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* favorites.html */

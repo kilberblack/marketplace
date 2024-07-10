@@ -5,15 +5,17 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('favorites/', views.favorites, name='favorites'),
     path('product/', views.paginaProducto, name='product'),
-    path('filter/', views.filter, name='filter'),
+    path('store/', views.store, name='store'),
+
     path('cart/', views.cart, name='cart'),
+    path('update_item/', views.update_item, name='update_item'),
+    path('process_order/', views.process_order, name='process_order'),
 
     path('login/', views.inisesion, name='login'),
     path('logout/', views.logoutUser, name='logout'),
     path('register/', views.registrarse, name='registro'),
 
     path('crud/', views.crudView, name='crud'),
-
     path('crud/seeusers/', views.seeUsers, name='seeusers'),
     path('crud/seeusers/createuser/', views.createUser, name='createuser'),
     path('crud/seeusers/edituser/<str:user_id>', views.editUser, name='edituser'),
@@ -25,3 +27,4 @@ urlpatterns = [
     path('crud/viewproducts/updateproduct/<str:pk>', views.updateProduct, name='updateproduct'),
     path('crud/viewproducts/deleteproduct/<str:pk>', views.deleteProduct, name='deleteproduct')
 ]
+

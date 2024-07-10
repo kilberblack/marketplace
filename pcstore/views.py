@@ -4,9 +4,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .forms import customUserCreation, customUserChangeForm, passwordChangeForm
-from .models import product
+from .models import *
+import datetime
 from .forms import productForm
 from django.http import Http404
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 #NO PUDE HACER QUE ESTA FUNCION get_object_or_404 FUNCIONARA ASIQUE BUSQUE EN INTERNET UNA PARECIDA
 def custom_get_object_or_404(klass, *args, **kwargs):
@@ -75,6 +79,7 @@ def registrarse(request):
 
     return render(request, 'register.html', context)
 
+@staff_member_required
 def createUser(request):
     if request.method == 'POST':
         form = customUserCreation(request.POST)
@@ -92,6 +97,7 @@ def createUser(request):
         form = customUserCreation()
     return render(request, 'createuser.html', {'form': form})
 
+@staff_member_required
 def changePassword(request, pk):
     user = custom_get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -112,6 +118,7 @@ def get_user_role(user):
     else:
         return "Regular User"
 
+@staff_member_required
 def seeUsers(request):
     users = User.objects.all()
     for user in users:
@@ -119,6 +126,7 @@ def seeUsers(request):
     context = {'users': users}
     return render(request, 'seeusers.html', context)
 
+@staff_member_required
 def editUser(request, user_id):
     user = custom_get_object_or_404(User, pk=user_id)
 
@@ -133,6 +141,7 @@ def editUser(request, user_id):
     context = {'form': form, 'user':user}
     return render(request, 'edituser.html', context)
 
+@staff_member_required
 def deleteUser(request,pk):
     user = User.objects.get(id=pk)
     if request.method == 'POST':
@@ -149,11 +158,23 @@ def favorites(request):
 def paginaProducto(request):
     return render(request, 'paginaproducto.html')
 
-def filter(request):
-    return render(request, 'filter.html')
-
 def cart(request):
-    return render(request, 'cart.html')
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+
+    context = {'items': items,'order':order}
+    return render(request, 'cart.html', context)
+
+def store(request):
+    products = product.objects.all()
+    context = {'products': products}
+    return render(request, 'store.html', context)
 
 @staff_member_required
 def crudView(request):
@@ -163,10 +184,12 @@ def crudView(request):
 def addProduct(request):
     form = productForm()
     if request.method == 'POST':
-        form = productForm(request.POST)
+        form = productForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('viewproducts')
+        else:
+            print("Form errors:", form.errors) 
 
     context = {'form': form}
     return render(request, 'addproduct.html', context)
@@ -177,7 +200,7 @@ def updateProduct(request,pk):
     form = productForm(instance=products)
     
     if request.method == 'POST':
-        form = productForm(request.POST, instance=products)
+        form = productForm(request.POST, request.FILES, instance=products)
         if form.is_valid():
             form.save()
             return redirect('viewproducts')
@@ -198,3 +221,86 @@ def deleteProduct(request,pk):
         producto.delete()
         return redirect('viewproducts')
     return render(request, 'deleteproduct.html',{'obj':producto})
+
+def update_item(request):
+    try:
+        data = json.loads(request.body)
+        productId = data['productId']
+        action = data['action']
+
+        print('Action:', action)
+        print('Product ID:', productId)
+
+        customer = request.user.customer
+        prod = product.objects.get(id=productId)
+        order , created = Order.objects.get_or_create(customer=customer, complete=False)
+
+        orderItem, created = OrderItem.objects.get_or_create(order=order, product=prod)
+
+        if action == 'add':
+            orderItem.quantity = (orderItem.quantity + 1)
+        elif action == 'remove':
+            orderItem.quantity = (orderItem.quantity - 1)
+        
+        orderItem.save()
+
+        if orderItem.quantity <= 0:
+            orderItem.delete()
+
+        context = {'message': 'Item was added'}
+        return JsonResponse(context, safe=False)
+    except Exception as e:
+        print("Error:", e)
+        return JsonResponse({'error': str(e)}, status=500)
+    except product.DoesNotExist:
+        print("Product not found")
+        return JsonResponse({'error': 'Product not found'}, status=404)
+    except Order.DoesNotExist:
+        print("Order not found")
+        return JsonResponse({'error': 'Order not found'}, status=404)
+    except ValueError as ve:
+        print("ValueError:", ve)
+        return JsonResponse({'error': str(ve)}, status=400)
+    except Exception as e:
+        print("Error:", e)
+        return JsonResponse({'error': str(e)}, status=500)
+    
+def process_order(request):
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order , created = Order.objects.get_or_create(customer=customer, complete=False)
+        total = float(data['form']['total'])
+        order.transaction_id = transaction_id
+
+        if total == order.get_cart_total:
+            order.complete = True
+        order.save()
+
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data['shipping']['address'],
+            city=data['shipping']['city'],
+            comuna=data['shipping']['comuna'],
+            zipcode=data['shipping']['zipcode'],
+        )
+
+        print(f"Order Details:\n"
+              f"Transaction ID: {transaction_id}\n"
+              f"Customer: {customer}\n"
+              f"Order: {order}\n"
+              f"Created: {created}\n"
+              f"Total from form: {total}\n"
+              f"Order total: {order.get_cart_total}\n"
+              f"Order Complete: {order.complete}\n"
+              f"Address: {data['shipping']['address']}\n"
+              f"City: {data['shipping']['city']}\n"
+              f"Comuna: {data['shipping']['comuna']}\n"
+              f"Zipcode: {data['shipping']['zipcode']}\n")
+
+    else:
+        print('User is not logged in...')
+    return JsonResponse('Payment complete', safe=False)

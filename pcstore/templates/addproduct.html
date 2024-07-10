@@ -6,7 +6,7 @@
 {% block content %}
 
 <div class="form-container">
-    <form method="POST" action="" class="form-form">
+    <form method="POST" action="" enctype="multipart/form-data" class="form-form">
         <h2>Agregar Producto</h2>
         {% csrf_token %}
         {{form.as_p}}

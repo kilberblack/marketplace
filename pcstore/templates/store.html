@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock css%}
+{% block content %}
+
+    <div class="container">
+      <div class="row">
+        {% for product in products %}
+          <div class="col-lg-4 mt-3">
+              <img class="thumbnail" src="{{ product.image.url }}">
+              <div class="box-element product">
+                <h6><strong>{{product.nombre}}</strong></h6>
+                <hr>
+                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Agregar al Carrito</button>
+                <a class="btn btn-outline-success" href="#">Ver</a>
+                <h4 style="display: inline-block; float: right;">${{product.precio|floatformat:2}}</h4>
+              </div>
+          </div>  
+        {% endfor %}    
+      </div>
+    </div>
+
+{% endblock content%}
+{% block scriptload %}
+  <script src="{% static 'js/cart.js' %}"></script>
+{% endblock scriptload %}

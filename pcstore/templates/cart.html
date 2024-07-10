@@ -1,109 +1,176 @@
 {% extends "main.html" %}
 {% load static %}
+{% block css%}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .form-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+    }
+    .form-group {
+        flex: 1;
+        margin: 0 10px;
+    }
+    
+    .outline-white {
+      outline: 1px solid #fff;
+    }
+  </style>
+{% endblock css %}
 {% block content %}
-
-    <main>
       <div class="container">
         <div class="row">
           <div class="col-6">
+            {% for item in items %}
             <div class="prod-box rounded-5">
-              <div class="prod-pic "> 
-                <img src="{% static 'fotos/procesador.png' %}" alt="...">
+              <div class="prod-pic"> 
+                <img src="{{item.product.imageURL}}" alt="...">
               </div>
               <div class="prod-text">
-                <h5>Procesador CPU AMD Ryzen 7 7800X</h5>
-                <h3>$ 254.990</h3>
-                <p>Precio Efectivo</p>
-                <h4><span class="material-symbols-outlined">
-                  remove
-                  </span>
-                  </span> 1 <span class="material-symbols-outlined">
-                    add </span></h4> 
+                <h4>{{item.product.nombre}}</h4>
+                <h5 style="color: #8672f3;">${{item.product.precio|floatformat:2}}</h5>
+                  <div style="display: flex; align-items: center; margin-left: 10px;">
+                    <span data-product="{{item.product.id }}" data-action="add" class="material-icons update-cart" style="font-size: 20px; cursor: pointer;">add</span>
+                    <h5 class="d-flex" style="font-size: 25px;">x{{item.quantity}}</h5>
+                    <span data-product="{{item.product.id }}" data-action="remove" class="material-icons update-cart" style="font-size: 20px; cursor: pointer;">remove</span>
+                  </div>        
               </div>
             </div>
-            <div class="prod-box rounded-5">
-              <div class="prod-pic "> 
-                <img src="{% static 'fotos/procesador.png' %}" alt="...">
-              </div>
-              <div class="prod-text">
-                <h5>Procesador CPU AMD Ryzen 7 7800X</h5>
-                <h3>$ 254.990</h3>
-                <p>Precio Efectivo</p>
-                <h4><span class="material-symbols-outlined">
-                  remove
-                  </span>
-                  </span> 1 <span class="material-symbols-outlined">
-                    add </span></h4> 
-              </div>
-            </div>
-            <div class="prod-box rounded-5">
-              <div class="prod-pic "> 
-                <img src="{% static 'fotos/procesador.png' %}" alt="...">
-              </div>
-              <div class="prod-text">
-                <h5>Procesador CPU AMD Ryzen 7 7800X</h5>
-                <h3>$ 254.990</h3>
-                <p>Precio Efectivo</p>
-                <h4><span class="material-symbols-outlined">
-                  remove
-                  </span>
-                  </span> 1 <span class="material-symbols-outlined">
-                    add </span></h4> 
-              </div>
-            </div>
+            {% endfor %}
           </div>
           <div class="col-6 info-pago">
             <div class="cart-info">
               <h1>Total del carrito</h1>
-
-              <div class="form-group">
-                <label for="firstName">Nombre:</label>
-                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Ingrese su nombre">
-              </div>
-              <div class="form-group">
-                <label for="lastName">Apellido:</label>
-                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Ingrese su apellido">
-              </div>
-
-              <div class="dropdown ml-2">
-                <button class="btn dropdown-toggle" type="button" id="deliveryMethod" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Tipo de Envio <span class="material-symbols-outlined"> local_shipping</span>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="deliveryMethod">
-                  <a class="dropdown-item" href="#">Delivery</a>
-                    <a class="dropdown-item" href="#">Retiro en tienda</a>
+              <form method="POST" action="" enctype="multipart/form-data" id="payment-form">
+                {% csrf_token %}
+                <div class="container" id="user-info">
+                  <div class="row">
+                    <div class="col-md-6 form-field">
+                        <input class="form-control outline-white" type="text" name="name" placeholder="Nombre..">
+                    </div>
+                    <div class="col-md-6 form-field">
+                        <input class="form-control outline-white" type="text" name="lastname" placeholder="Apellido..">
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <div class="form-group">
-                <label for="address">Direccion:</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="Ingrese su direccion">
-              </div>
-
-              <div class="dropdown ml-2">
-                <button class="btn dropdown-toggle" type="button" id=metodoPago" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Metodo de pago <span class="material-symbols-outlined"> payments</span>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="metodoPago">
-                  <a class="dropdown-item" href="#">Credito</a>
-                  <a class="dropdown-item" href="#">Debito</a>
-                  <a class="dropdown-item" href="#">Transferencia</a>
+  
+                <div class="dropdown ml-2 d-flex float-start">
+                  <button class="btn dropdown-toggle" type="button" id="metodoPago" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="outline: 1px solid #fff; margin-right: 16px;">
+                    Metodo de pago <span class="material-symbols-outlined"> payments</span>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="metodoPago">
+                    <a class="dropdown-item" href="#" onclick="setPaymentMethod('Credito')">Credito</a>
+                    <a class="dropdown-item" href="#" onclick="setPaymentMethod('Debito')">Debito</a>
+                    <a class="dropdown-item" href="#" onclick="setPaymentMethod('Transferencia')">Transferencia</a>
+                  </div>
+                </div>  
+  
+                <hr style="opacity: 0%;">
+  
+                <div id="shipping-info" class="container">
+                    <hr style="opacity: 0%;">
+                    <h6>Información de Envío:</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6 form-field">
+                            <input class="form-control outline-white" type="text" name="address" placeholder="Direccion..">
+                        </div>
+                        <div class="col-md-6 form-field">
+                            <input class="form-control outline-white" type="text" name="city" placeholder="Ciudad..">
+                        </div>
+                        <div class="col-md-6 form-field">
+                            <input class="form-control outline-white" type="text" name="comuna" placeholder="Comuna..">
+                        </div>
+                        <div class="col-md-6 form-field">
+                            <input class="form-control outline-white" type="text" name="zipcode" placeholder="Codigo postal..">
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <div class="final-price">
-                <h3>$254.990</h3>
-                <h3>$265.190</h3>
-                <h3>+ $100.990</h3>
-                <h3>Total: $621.170</h3>
-              </div>
-
-              <div class="pago">
-                <button type="button" class="btn btn-primary">Comprar</button>
-              </div>
+  
+                <div>
+                  <h4 style="float: left;">Items: {{order.get_cart_items}}</h4>
+                  <h3 style="float: right;">Total: ${{order.get_cart_total}}</h3>
+                </div>
+  
+                <button type="submit" id="make-payment" class="btn btn-primary w-100">Pagar</button>
+                  
+              </form>
           </div>
         </div>
       </div>
-    </main>
+      <script type="text/javascript">
+        var form = document.getElementById('payment-form');
+        var shipping = '{{order.shipping}}'
+        var total = '{{order.get_cart_total|floatformat:2}}'
+        var selectedPaymentMethod = null;
 
+        if (typeof user != 'AnonymousUser' || user != 'undefined') {
+            document.getElementById('user-info').innerHTML = ''
+        }
+
+        document.getElementById('make-payment').addEventListener('click', function(e){
+            console.log('Make payment button clicked');
+            e.preventDefault();
+            submitFormData();
+        })
+
+        function setPaymentMethod(method) {
+            var button = document.getElementById('metodoPago')
+            button.innerHTML = method + ' <span class="material-icons">payments</span>';
+            selectedPaymentMethod = method;
+            console.log('Selected payment method:', selectedPaymentMethod);
+        }
+
+        function submitFormData(){
+          console.log('Submit form data function called');
+
+            var userFormData = {
+              'name': null,
+              'email': null,
+              'paymentMethod': selectedPaymentMethod,
+              'total': total,
+            }
+
+            var shippingInfo = {
+              'address': form.address.value,
+              'city': form.city.value,
+              'comuna': form.comuna.value,
+              'zipcode': form.zipcode.value,
+            }
+
+            if (typeof user == 'AnonymousUser' || user == 'undefined'){
+              userFormData.name = form.name.value
+              userFormData.email = form.email.value
+            }
+
+            var url = '/process_order/'
+            fetch(url,{
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+              },
+              body: JSON.stringify({'form': userFormData, 'shipping': shippingInfo})
+            })
+            .then((response) => {
+                console.log('Response received:', response);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+              console.log('Success', data);
+              alert('Pago completado');
+              window.location.href = "{% url 'index' %}"
+            }) 
+            .catch((error) => {
+            console.error('There has been a problem with your fetch operation:', error);
+            });
+        }
+      </script>
 {% endblock content %}
+{% block scriptload %}
+      <script src="{% static 'js/cart.js' %}"></script>
+{% endblock scriptload %}
