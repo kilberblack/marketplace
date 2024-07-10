@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/createform.css' %}">
+{% endblock css%}
+{% block content %}
+<div class="form-container">
+    <form method="POST" action="" class="form-form">
+        {% csrf_token %}
+        <h1>¿ESTA SEGURO QUE DESEA ELIMINAR EL PEDIDO "{{ obj }}"?</h1>
+        <button type="submit" class="btn btn-danger w-100 mt-3">Eliminar</button>
+        <button class="btn btn-secondary mt-2 w-100" type="button" onclick="window.location.href='{% url 'view_orders' %}'" >Volver</button>
+    </form>
+</div>
+{% endblock content %}
+{% block footer %}
+{% endblock footer %}

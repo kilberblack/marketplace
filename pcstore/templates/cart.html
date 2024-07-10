@@ -50,7 +50,7 @@
                         <input class="form-control outline-white" type="text" name="name" placeholder="Nombre..">
                     </div>
                     <div class="col-md-6 form-field">
-                        <input class="form-control outline-white" type="text" name="lastname" placeholder="Apellido..">
+                        <input class="form-control outline-white" type="text" name="email" placeholder="Correo..">
                     </div>
                   </div>
                 </div>
@@ -105,9 +105,15 @@
         var total = '{{order.get_cart_total|floatformat:2}}'
         var selectedPaymentMethod = null;
 
-        if (typeof user != 'AnonymousUser' || user != 'undefined') {
-            document.getElementById('user-info').innerHTML = ''
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('User:', typeof user, user);
+            if (user !== 'AnonymousUser' && typeof user !== 'undefined') {
+                document.getElementById('user-info').style.display = 'none';
+            } else {
+                document.getElementById('user-info').style.display = 'block';
+            }
+            console.log(document.getElementById('user-info'));
+        });
 
         document.getElementById('make-payment').addEventListener('click', function(e){
             console.log('Make payment button clicked');
@@ -139,9 +145,28 @@
               'zipcode': form.zipcode.value,
             }
 
-            if (typeof user == 'AnonymousUser' || user == 'undefined'){
-              userFormData.name = form.name.value
-              userFormData.email = form.email.value
+            var missingFields = [];
+
+            if (user !== 'AnonymousUser' && typeof user !== 'undefined'){
+                userFormData.name = '{{ request.user.first_name }}';
+                userFormData.email = '{{ request.user.email }}';
+            } else {
+                if (!userFormData.name) missingFields.push('Nombre');
+                if (!userFormData.email) missingFields.push('Correo');
+                userFormData.name = form.name.value;
+                userFormData.email = form.email.value;
+            }
+           
+            if (!userFormData.paymentMethod) missingFields.push('Metodo de pago');
+            if (!shippingInfo.address) missingFields.push('Direccion');
+            if (!shippingInfo.city) missingFields.push('Ciudad');
+            if (!shippingInfo.comuna) missingFields.push('Comuna');
+            if (!shippingInfo.zipcode) missingFields.push('Zipcode');
+
+            if (missingFields.length > 0) {
+                console.log('Order not created bcause some values are missing')
+                alert('Los siguientes campos estan vacios: ' + missingFields.join(', '));
+                return;
             }
 
             var url = '/process_order/'
@@ -162,7 +187,11 @@
             })
             .then((data) => {
               console.log('Success', data);
-              alert('Pago completado');
+              alert('Pago completado (aqui te deberia redireccionar al pago pero no puedo implementar eso asique solo te lleva al index)');
+
+              cart = {}
+              document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
               window.location.href = "{% url 'index' %}"
             }) 
             .catch((error) => {

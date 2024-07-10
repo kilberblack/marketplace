@@ -4,7 +4,7 @@ from django.utils import timezone
 # Create your models here.
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
 
@@ -72,4 +72,5 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+        
         

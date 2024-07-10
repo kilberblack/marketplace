@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 shadow-lg mx-auto text-center p-3">
+            <a class="btn btn-danger" href="{% url 'crud' %}">Volver</a>
+            <hr>
+            <h1 style="color: #fff;">Pedidos</h1>
+            <table class="table table-dark table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID del Pedido</th>
+                        <th>Correo del Cliente</th>
+                        <th>Fecha del Pedido</th>
+                        <th>Total de Artículos</th>
+                        <th>Costo Total</th>
+                        <th>ID de Transacción</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.customer.email }}</td>
+                        <td>{{ order.date_ordered }}</td>
+                        <td>{{ order.get_cart_items }}</td>
+                        <td>${{ order.get_cart_total }}</td>
+                        <td>{{ order.transaction_id }}</td>
+                        <td><a href="{% url 'delete_order' order.id %}"><button class="btn btn-danger">Eliminar</button></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content%}
+{% block footer %}
+
+{% endblock footer%}

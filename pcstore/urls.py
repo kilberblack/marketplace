@@ -25,6 +25,10 @@ urlpatterns = [
     path('crud/viewproducts/', views.viewProducts, name='viewproducts'),
     path('crud/viewproducts/addproduct/', views.addProduct, name='addproduct'),
     path('crud/viewproducts/updateproduct/<str:pk>', views.updateProduct, name='updateproduct'),
-    path('crud/viewproducts/deleteproduct/<str:pk>', views.deleteProduct, name='deleteproduct')
+    path('crud/viewproducts/deleteproduct/<str:pk>', views.deleteProduct, name='deleteproduct'),
+
+    path('crud/view_orders/', views.view_orders, name='view_orders'),
+    path('crud/view_orders/modify/<str:order_id>/', views.modify_order, name='modify_order'),
+    path('crud/view_orders/delete/<str:order_id>/', views.delete_order, name='delete_order'),
 ]
 

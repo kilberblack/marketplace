@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import product
+from .models import *
 
 class productForm(ModelForm):
     class Meta:
@@ -94,3 +94,9 @@ class passwordChangeForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        exclude = ['date_ordered', 'complete']
+
